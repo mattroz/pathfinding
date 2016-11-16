@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <math.h>
 #include "sources/headers/queue.h"
 #include "sources/headers/stack.h"
 
@@ -10,7 +11,7 @@
 #define J_START 0
 
 /*	prototypes	*/
-int calculate_heuristics(Node_t*, int, int);
+//int calculate_heuristics(Node_t*, int, int);
 int initialize(Node_t*, int*, int*);
 
 
@@ -63,7 +64,9 @@ int initialize(Node_t *_field, int *end_i, int *end_j)
 	{
 		for(int j = 0; j < FLD_SZ; j++)
 		{
-			
+			double X = (I_START - *end_i) << 1;
+				   Y = (J_START - *end_j) << 1;
+			_field[i][j]->heuristic = sqrt(X + Y);
 		}
 	}	
 }
