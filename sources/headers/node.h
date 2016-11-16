@@ -9,7 +9,7 @@ typedef struct Node
     int is_visited;
     int is_obstacle;
     int movement_cost;
-    int heurisic;
+    int heuristic;
 }Node_t;
 
 #endif

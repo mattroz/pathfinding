@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "../headers/node.h"
 #include "../headers/queue.h"
+
 
 /*		IMPLEMENTATION	*/
 
