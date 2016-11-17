@@ -4,12 +4,12 @@
 /*  Queue element definition    */
 typedef struct Node
 {
-    int value;
+    float value;
     struct Node *next;
     int is_visited;
     int is_obstacle;
-    int movement_cost;
-    int heuristic;
+    float movement_cost;
+    float heuristic;
 }Node_t;
 
 #endif
