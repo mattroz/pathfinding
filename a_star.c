@@ -65,14 +65,14 @@ int initialize(Node_t _field[][FLD_SZ], int *end_i, int *end_j)
 	/*	make startpoint a non-obstacle node	*/
 	_field[I_START][J_START].is_obstacle = 0;
 
-	/*	calculate heuristic values for each node	*/
+	/*	calculate heuristic estimates for each node	*/
 	for(int i = 0; i < FLD_SZ; i++)
 	{
 		for(int j = 0; j < FLD_SZ; j++)
 		{
-			double X = pow(abs(*end_i - i), 2),
-				   Y = pow(abs(*end_j - j), 2);
-			_field[i][j].heuristic = sqrt(X + Y);
+			double X = abs(*end_i - i),
+				   Y = abs(*end_j - j);
+			_field[i][j].heuristic = X + Y;
 		}
 	}	
 	return 1;
