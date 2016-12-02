@@ -38,7 +38,7 @@ int enqueue(Node_t **_head, Node_t **_tail, Node_t enq_node)
 
 	(*_tail)->next = new_node;
 	*_tail = new_node;
-	printf("enqueue %f\n", (*_tail)->value);
+	printf("enqueue element[%d][%d]\n", (*_tail)->x, (*_tail)->y);
 
 	return 1;
 }
