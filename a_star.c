@@ -60,13 +60,15 @@ int initialize(Node_t _field[][FLD_SZ], int *end_i, int *end_j)
 	srand(time(NULL));
 	for(int i = 0; i < FLD_SZ; i++)
 		for(int j = 0; j < FLD_SZ; j++)
-			//_field[i][j] =(Node_t)malloc(sizeof(Node_t));
 			_field[i][j].is_obstacle = rand() % 2;
 
 	/*	make startpoint a non-obstacle node	*/
 	_field[I_START][J_START].is_obstacle = 0;
 
-	/*	calculate heuristic estimates for each node	*/
+	/*	
+	 *	calculate heuristic estimates for each node	
+	 *	(Manhattan distance)
+	 */
 	for(int i = 0; i < FLD_SZ; i++)
 	{
 		for(int j = 0; j < FLD_SZ; j++)
@@ -113,4 +115,20 @@ int a_star(Node_t _field[][FLD_SZ], int end_i, int end_j)
 	Node_t came_from[FLD_SZ * FLD_SZ];
 
 	/*	start searching	*/		
+	while(queue_head != 1)
+	{
+		/*	get node from open list	*/
+		Node_t current_node;
+		dequeue(&queue_head, &current_node);
+		
+		if(current_node.x == end_i && 
+		   current_node.y == end_j)
+		{
+			printf("finished at [%d][%d]\n", current_node.x, current_node.y);
+			return 1;	
+		}
+	
+		
+	}
+
 }
