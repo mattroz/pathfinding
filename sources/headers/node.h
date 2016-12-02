@@ -10,6 +10,8 @@ typedef struct Node
     int is_obstacle;
     float movement_cost;
     float heuristic;
+	int x;
+	int y;
 }Node_t;
 
 #endif

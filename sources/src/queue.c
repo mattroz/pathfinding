@@ -19,17 +19,19 @@ int initialize_queue(Node_t **_head, Node_t **_tail)
 }
 
 
-int enqueue(Node_t **_head, Node_t **_tail, int _value)
+int enqueue(Node_t **_head, Node_t **_tail, Node_t enq_node)
 {	
 	Node_t *new_node = malloc(sizeof(Node_t));
+	new_node = &enq_node;
 	new_node->next = NULL;
-	new_node->value = _value;
+	
 
 	if(is_empty(*_head) == 1)
 	{
 		*_tail = new_node;
 		*_head = *_tail;
-		printf("queue is empty, enqueue %f\n", (*_tail)->value);
+		printf("queue is empty, enqueue element [%d][%d]\n", 
+				(*_tail)->x, (*_tail)->y);
 		
 		return 1;
 	}
@@ -42,7 +44,7 @@ int enqueue(Node_t **_head, Node_t **_tail, int _value)
 }
 
 
-int dequeue(Node_t **_head, int *dest)
+int dequeue(Node_t **_head, Node_t *dest_node)
 {
 	/*	check if head == tail	*/
 	if(is_empty((*_head)) != 0)
@@ -51,9 +53,9 @@ int dequeue(Node_t **_head, int *dest)
 		return 1;
 	}
 	
-	*dest = (*_head)->value;
+	dest_node = *_head;
 	*_head = (*_head)->next;
-	printf("dequeue %d\n", *dest);
+	printf("dequeue element [%d][%d]\n", dest_node->x, dest_node->y);
 
 	return 1;
 }

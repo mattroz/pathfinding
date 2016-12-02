@@ -106,7 +106,11 @@ int a_star(Node_t _field[][FLD_SZ], int end_i, int end_j)
 	/*	initialize queue	*/
 	Node_t *queue_head, *queue_tail;
 	initialize_queue(&queue_head, &queue_tail);
-	
-	
-	
+	enqueue(&queue_head, &queue_tail, _field[I_START][J_START]);	
+
+	/*	initialize some data structures	for A*	*/
+	float current_cost[FLD_SZ * FLD_SZ];
+	Node_t came_from[FLD_SZ * FLD_SZ];
+
+	/*	start searching	*/		
 }
