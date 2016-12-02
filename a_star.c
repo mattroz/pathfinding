@@ -4,16 +4,16 @@
 #include <string.h>
 #include <math.h>
 #include "sources/headers/queue.h"
-#include "sources/headers/stack.h"
+#include "sources/src/queue.c"
 
-#define FLD_SZ 10
+#define FLD_SZ 30
 #define I_START 0
 #define J_START 0
 
 /*	prototypes	*/
-//int calculate_heuristics(Node_t*, int, int);
 int initialize(Node_t[][FLD_SZ], int*, int*);
-void print_heuristic(Node_t[][FLD_SZ]);
+void print_field(Node_t[][FLD_SZ]);
+int a_star(Node_t[][FLD_SZ], int, int);
 
 
 int main(int argc, char *argv[])
@@ -38,8 +38,13 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}	
 	
-	print_heuristic(map);
+	print_field(map);
 	
+	if(a_star(map, i_end, j_end) != 1)
+	{
+		perror("a_star()");
+		exit(EXIT_FAILURE);
+	}
 
 	return 0;
 }
@@ -54,13 +59,9 @@ int initialize(Node_t _field[][FLD_SZ], int *end_i, int *end_j)
 	/*	generate obstacles 	*/
 	srand(time(NULL));
 	for(int i = 0; i < FLD_SZ; i++)
-	{
 		for(int j = 0; j < FLD_SZ; j++)
-		{
 			//_field[i][j] =(Node_t)malloc(sizeof(Node_t));
 			_field[i][j].is_obstacle = rand() % 2;
-		}
-	}
 
 	/*	make startpoint a non-obstacle node	*/
 	_field[I_START][J_START].is_obstacle = 0;
@@ -80,15 +81,13 @@ int initialize(Node_t _field[][FLD_SZ], int *end_i, int *end_j)
 
 
 /*	print all nodes' attributes */
-void print_heuristic(Node_t _field[][FLD_SZ])
+void print_field(Node_t _field[][FLD_SZ])
 {
 	printf("******* HEURISTIC *******\n");
 	for(int i = 0; i < FLD_SZ; i++)
 	{
 		for(int j = 0; j < FLD_SZ; j++)
-		{
-			printf("%f\t", _field[i][j].heuristic);
-		}
+			printf("%.1f ", _field[i][j].heuristic);
 		printf("\n");
 	}
 
@@ -96,10 +95,18 @@ void print_heuristic(Node_t _field[][FLD_SZ])
 	for(int i = 0; i < FLD_SZ; i++)
 	{
 		for(int j = 0; j < FLD_SZ; j++)
-		{
 			printf("%d ", _field[i][j].is_obstacle);
-		}
 		printf("\n");
 	}
+}
 
+
+int a_star(Node_t _field[][FLD_SZ], int end_i, int end_j)
+{
+	/*	initialize queue	*/
+	Node_t *queue_head, *queue_tail;
+	initialize_queue(&queue_head, &queue_tail);
+	
+	
+	
 }

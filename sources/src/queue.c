@@ -13,7 +13,7 @@ int initialize_queue(Node_t **_head, Node_t **_tail)
 	*_head = malloc(sizeof(Node_t));
 	*_tail = NULL;
 	*_head = *_tail;
-	printf("initialization\n");
+	printf("queue initialization\n");
 
 	return 1;
 }
@@ -29,14 +29,14 @@ int enqueue(Node_t **_head, Node_t **_tail, int _value)
 	{
 		*_tail = new_node;
 		*_head = *_tail;
-		printf("queue is empty, enqueue %d\n", (*_tail)->value);
+		printf("queue is empty, enqueue %f\n", (*_tail)->value);
 		
 		return 1;
 	}
 
 	(*_tail)->next = new_node;
 	*_tail = new_node;
-	printf("enqueue %d\n", (*_tail)->value);
+	printf("enqueue %f\n", (*_tail)->value);
 
 	return 1;
 }
