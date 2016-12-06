@@ -6,9 +6,9 @@
 #include "sources/headers/queue.h"
 #include "sources/src/queue.c"
 
-#define FLD_SZ 30
-#define I_START 0
-#define J_START 0
+#define FLD_SZ 15
+#define I_START 5
+#define J_START 5
 
 
 /*	prototypes	*/
@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 	 */   
 	if(argc != 3)
 	{
-        printf("usage: ./search_to <i-coord> <j-coord>");
+        printf("usage: ./search_to.out <i-coord> <j-coord>\n");
         exit(EXIT_FAILURE);
 	}
 	int i_end = atoi(argv[1]), 
@@ -61,9 +61,11 @@ int initialize(Node_t _field[][FLD_SZ], int end_i, int end_j)
 	srand(time(NULL));
 	for(int i = 1; i < (FLD_SZ - 1); i++)
 		for(int j = 1; j < (FLD_SZ - 1); j++)
-			_field[i][j].is_obstacle = rand() % 2;
-	
-	/*	outer ring fill with obstacles too
+		//	_field[i][j].is_obstacle = rand() % 2;
+			_field[i][j].is_obstacle = 0;	
+
+	/*
+	 *	fill outer ring with obstacles
 	 *	to prevent out-of-index error
 	 */
 	for(int i = 0; i < FLD_SZ; i++)
@@ -80,6 +82,7 @@ int initialize(Node_t _field[][FLD_SZ], int end_i, int end_j)
 
 	/*	make startpoint and endpoint a non-obstacle node	*/
 	_field[I_START][J_START].is_obstacle = 0;
+	_field[I_START][J_START].is_visited = 1;
 	_field[end_i][end_j].is_obstacle = 0;	
 
 	/*	
@@ -95,6 +98,7 @@ int initialize(Node_t _field[][FLD_SZ], int end_i, int end_j)
 			double X = abs(end_i - i),
 				   Y = abs(end_j - j);
 			_field[i][j].heuristic = X + Y;
+			_field[i][j].is_visited = 0;
 			/*	need this assignments for queue	*/
 			_field[i][j].x = i;
 			_field[i][j].y = j;
@@ -130,26 +134,25 @@ int a_star(Node_t _field[][FLD_SZ], int end_i, int end_j)
 	/*	initialize queue	*/
 	Node_t *queue_head, *queue_tail;
 	initialize_queue(&queue_head, &queue_tail);
-	enqueue(&queue_head, &queue_tail, _field[I_START][J_START]);	
+	enqueue(&queue_head, &queue_tail, &_field[I_START][J_START]);	
 
 	/*	initialize some data structures	for A*	*/
 	float current_cost[FLD_SZ * FLD_SZ];
 	Node_t came_from[FLD_SZ * FLD_SZ];
 	int step_x[4] = {0, 1, 0, -1}, 
-		step_y[4] = {1, 0, -1, 1};
+		step_y[4] = {1, 0, -1, 0};
 
 	/*	start searching	*/		
 	while(is_empty(queue_head) != 1)
 	{
 		/*	get node from open list	*/
-		Node_t current;
+		Node_t *current = malloc(sizeof(Node_t));
 		dequeue(&queue_head, &current);
 		
 		/*	check if current node is an endpoint	*/
-		if(current.x == end_i && 
-		   current.y == end_j)
+		if(current->x == end_i && current->y == end_j)
 		{
-			printf("finished at [%d][%d]\n", current.x, current.y);
+			printf("finished at [%d][%d]\n", current->x, current->y);
 			return 1;	
 		}
 	
@@ -157,18 +160,20 @@ int a_star(Node_t _field[][FLD_SZ], int end_i, int end_j)
 		for(int i = 0; i < 4; i++)
 		{
 			/*	move up/right/down/left	*/
-			int X = current.x + step_x[i];
-			int Y = current.y + step_y[i];
-			
+			int X = current->x + step_x[i];
+			int Y = current->y + step_y[i];			
+
 			Node_t neighbour = _field[X][Y];
 			neighbour.x = X;
 			neighbour.y = Y;
 			
 			
-			/*	if this neighbour isn't obstacle and haven't visited yet, add it*/
+			/*	if this neighbour isn't obstacle and 
+			 *	haven't visited yet, add it
+			 */
 			if(neighbour.is_obstacle == 0 && neighbour.is_visited == 0)
 			{
-				enqueue(&queue_head, &queue_tail, neighbour);
+				enqueue(&queue_head, &queue_tail, &neighbour);
 				_field[X][Y].is_visited = 1;	
 			}
 		}
