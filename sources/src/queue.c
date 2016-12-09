@@ -54,7 +54,6 @@ int dequeue(Node_t **_head, Node_t **dest_node)
 	}
 	
 	*dest_node = *_head;
-//	printf("(*_head)->next = %p\n", (*_head)->next);
 	*_head = (*_head)->next;
 	printf("dequeue element [%d][%d]\n", (*dest_node)->x, (*dest_node)->y);
 

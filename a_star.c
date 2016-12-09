@@ -61,7 +61,6 @@ int initialize(Node_t _field[][FLD_SZ], int end_i, int end_j)
 	srand(time(NULL));
 	for(int i = 1; i < (FLD_SZ - 1); i++)
 		for(int j = 1; j < (FLD_SZ - 1); j++)
-		//	_field[i][j].is_obstacle = rand() % 2;
 			_field[i][j].is_obstacle = 0;	
 
 	/*
@@ -143,8 +142,7 @@ int a_star(Node_t _field[][FLD_SZ], int end_i, int end_j)
 		step_y[4] = {1, 0, -1, 0};
 
 	/*	start searching	*/		
-	//while(is_empty(queue_head) != 1)
-	for(int i = 0; i < 5; i++)	// 			temporary!!!!!!
+	while(is_empty(queue_head) != 1)
 	{
 		/*	get node from open list	*/
 		Node_t *current = malloc(sizeof(Node_t));
@@ -165,18 +163,13 @@ int a_star(Node_t _field[][FLD_SZ], int end_i, int end_j)
 			int X = current->x + step_x[i];
 			int Y = current->y + step_y[i];			
 
-			Node_t neighbour = _field[X][Y];
-			//neighbour.x = X;
-			//neighbour.y = Y;
-			
-			
 			/*	
 			 *	if this neighbour isn't obstacle and 
 			 *	haven't visited yet, add it
 			 */
-			if(neighbour.is_obstacle == 0 && neighbour.is_visited == 0)
+			if(_field[X][Y].is_obstacle == 0 && _field[X][Y].is_visited == 0)
 			{
-				enqueue(&queue_head, &queue_tail, &neighbour);
+				enqueue(&queue_head, &queue_tail, &_field[X][Y]);
 			}
 		}
 	}
