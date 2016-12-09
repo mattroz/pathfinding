@@ -43,9 +43,11 @@ int main(int argc, char *argv[])
 	
 	if(a_star(map, i_end, j_end) != 1)
 	{
-		perror("a_star()");
+		printf("Endpoint is unreachable\n");
 		exit(EXIT_FAILURE);
 	}
+	
+	print_field(map);
 
 	return 0;
 }
@@ -125,6 +127,17 @@ void print_field(Node_t _field[][FLD_SZ])
 			printf("%d ", _field[i][j].is_obstacle);
 		printf("\n");
 	}
+	
+	printf("\n********* VISITED ********\n");
+    
+	for(int i = 0; i < FLD_SZ; i++)
+    {
+        for(int j = 0; j < FLD_SZ; j++)
+            printf("%d ", _field[i][j].is_visited);
+        printf("\n");
+    }
+
+
 }
 
 
@@ -139,7 +152,7 @@ int a_star(Node_t _field[][FLD_SZ], int end_i, int end_j)
 	float current_cost[FLD_SZ * FLD_SZ];
 	Node_t came_from[FLD_SZ * FLD_SZ];
 	int step_x[4] = {0, 1, 0, -1}, 
-		step_y[4] = {1, 0, -1, 0};
+	step_y[4] = {1, 0, -1, 0};
 
 	/*	start searching	*/		
 	while(is_empty(queue_head) != 1)
@@ -173,5 +186,6 @@ int a_star(Node_t _field[][FLD_SZ], int end_i, int end_j)
 			}
 		}
 	}
+	return 0;
 
 }
