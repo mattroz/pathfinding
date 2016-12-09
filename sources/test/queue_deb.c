@@ -4,7 +4,7 @@
 #include "../src/queue.c"
 #include "../headers/node.h"
 
-#define SIZE 5
+#define SIZE 10
 
 int main()
 {

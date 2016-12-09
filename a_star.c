@@ -7,8 +7,8 @@
 #include "sources/src/queue.c"
 
 #define FLD_SZ 15
-#define I_START 5
-#define J_START 5
+#define I_START 1
+#define J_START 1
 
 
 /*	prototypes	*/
@@ -143,11 +143,13 @@ int a_star(Node_t _field[][FLD_SZ], int end_i, int end_j)
 		step_y[4] = {1, 0, -1, 0};
 
 	/*	start searching	*/		
-	while(is_empty(queue_head) != 1)
+	//while(is_empty(queue_head) != 1)
+	for(int i = 0; i < 5; i++)	// 			temporary!!!!!!
 	{
 		/*	get node from open list	*/
 		Node_t *current = malloc(sizeof(Node_t));
 		dequeue(&queue_head, &current);
+		_field[current->x][current->y].is_visited = 1;	
 		
 		/*	check if current node is an endpoint	*/
 		if(current->x == end_i && current->y == end_j)
@@ -164,17 +166,17 @@ int a_star(Node_t _field[][FLD_SZ], int end_i, int end_j)
 			int Y = current->y + step_y[i];			
 
 			Node_t neighbour = _field[X][Y];
-			neighbour.x = X;
-			neighbour.y = Y;
+			//neighbour.x = X;
+			//neighbour.y = Y;
 			
 			
-			/*	if this neighbour isn't obstacle and 
+			/*	
+			 *	if this neighbour isn't obstacle and 
 			 *	haven't visited yet, add it
 			 */
 			if(neighbour.is_obstacle == 0 && neighbour.is_visited == 0)
 			{
 				enqueue(&queue_head, &queue_tail, &neighbour);
-				_field[X][Y].is_visited = 1;	
 			}
 		}
 	}
