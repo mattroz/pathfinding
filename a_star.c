@@ -7,6 +7,7 @@
 #include "sources/src/queue.c"
 
 #define FLD_SZ 15
+#define MOV_COST 1	/*	assume that node size is 1x1 meters	*/
 #define I_START 1
 #define J_START 1
 
@@ -90,7 +91,8 @@ int initialize(Node_t _field[][FLD_SZ], int end_i, int end_j)
 	 *	calculate heuristic estimates for each node	
 	 *	(Manhattan distance)
 	 *	and assign each node it's own index 
-	 *	according to field
+	 *	according to field,
+	 *	assign to every node its movement cost
 	 */
 	for(int i = 0; i < FLD_SZ; i++)
 	{
@@ -100,6 +102,7 @@ int initialize(Node_t _field[][FLD_SZ], int end_i, int end_j)
 				   Y = abs(end_j - j);
 			_field[i][j].heuristic = X + Y;
 			_field[i][j].is_visited = 0;
+			_field[i][j].movement_cost = MOV_COST;
 			/*	need this assignments for queue	*/
 			_field[i][j].x = i;
 			_field[i][j].y = j;
@@ -149,10 +152,11 @@ int a_star(Node_t _field[][FLD_SZ], int end_i, int end_j)
 	enqueue(&queue_head, &queue_tail, &_field[I_START][J_START]);	
 
 	/*	initialize some data structures	for A*	*/
-	float current_cost[FLD_SZ * FLD_SZ];
+	//float current_cost[FLD_SZ * FLD_SZ];
 	Node_t came_from[FLD_SZ * FLD_SZ];
+	_field[I_START][J_START].cost_from_start = 0;
 	int step_x[4] = {0, 1, 0, -1}, 
-	step_y[4] = {1, 0, -1, 0};
+		step_y[4] = {1, 0, -1, 0};
 
 	/*	start searching	*/		
 	while(is_empty(queue_head) != 1)
@@ -175,6 +179,11 @@ int a_star(Node_t _field[][FLD_SZ], int end_i, int end_j)
 			/*	move up/right/down/left	*/
 			int X = current->x + step_x[i];
 			int Y = current->y + step_y[i];			
+			
+			/*	calculate cost from start point to current neighbour	*/ 
+			_field[X][Y].cost_from_start = current->cost_from_start + 
+											_field[X][Y].movement_cost;
+			printf("cost from start to [%d][%d] = %f\n", X, Y, _field[X][Y].cost_from_start);			
 
 			/*	
 			 *	if this neighbour isn't obstacle and 

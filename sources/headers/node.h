@@ -4,7 +4,7 @@
 /*  Queue element definition    */
 typedef struct Node
 {
-    float value;
+    float cost_from_start;
     struct Node *next;
     int is_visited;
     int is_obstacle;
