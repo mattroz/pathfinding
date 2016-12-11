@@ -191,6 +191,7 @@ int a_star(Node_t _field[][FLD_SZ], int end_i, int end_j)
 			 */
 			if(_field[X][Y].is_obstacle == 0 && _field[X][Y].is_visited == 0)
 			{
+				//	NEED: enqueue(&queue_head, &queue_tail, &_field[X][Y], estimation);
 				enqueue(&queue_head, &queue_tail, &_field[X][Y]);
 			}
 		}
