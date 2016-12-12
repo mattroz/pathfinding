@@ -13,9 +13,9 @@
 
 
 /*	prototypes	*/
-int initialize(Node_t[][FLD_SZ], int, int);
-void print_field(Node_t[][FLD_SZ]);
-int a_star(Node_t[][FLD_SZ], int, int);
+int initialize(node_t[][FLD_SZ], int, int);
+void print_field(node_t[][FLD_SZ]);
+int a_star(node_t[][FLD_SZ], int, int);
 
 
 int main(int argc, char *argv[])
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 		j_end = atoi(argv[2]);	
 	
 	/*	initialize pathfinding field	*/
-	Node_t map[FLD_SZ][FLD_SZ];
+	node_t map[FLD_SZ][FLD_SZ];
 	if (initialize(map, i_end, j_end) != 1)
 	{
 		perror("initialize()");
@@ -56,9 +56,9 @@ int main(int argc, char *argv[])
 
 /*	
  * initialize all parameters:	
- * _field - map of nodes Node_t
+ * _field - map of nodes node_t
  */
-int initialize(Node_t _field[][FLD_SZ], int end_i, int end_j)
+int initialize(node_t _field[][FLD_SZ], int end_i, int end_j)
 {	 
 	/*	generate obstacles	*/
 	srand(time(NULL));
@@ -113,7 +113,7 @@ int initialize(Node_t _field[][FLD_SZ], int end_i, int end_j)
 
 
 /*	print all nodes' attributes */
-void print_field(Node_t _field[][FLD_SZ])
+void print_field(node_t _field[][FLD_SZ])
 {
 	printf("******* HEURISTIC *******\n");
 	for(int i = 0; i < FLD_SZ; i++)
@@ -144,16 +144,16 @@ void print_field(Node_t _field[][FLD_SZ])
 }
 
 
-int a_star(Node_t _field[][FLD_SZ], int end_i, int end_j)
+int a_star(node_t _field[][FLD_SZ], int end_i, int end_j)
 {
 	/*	initialize queue	*/
-	Node_t *queue_head, *queue_tail;
+	node_t *queue_head, *queue_tail;
 	initialize_queue(&queue_head, &queue_tail);
 	enqueue(&queue_head, &queue_tail, &_field[I_START][J_START]);	
 
 	/*	initialize some data structures	for A*	*/
 	//float current_cost[FLD_SZ * FLD_SZ];
-	Node_t came_from[FLD_SZ * FLD_SZ];
+	node_t came_from[FLD_SZ * FLD_SZ];
 	_field[I_START][J_START].cost_from_start = 0;
 	int step_x[4] = {0, 1, 0, -1}, 
 		step_y[4] = {1, 0, -1, 0};
@@ -162,7 +162,7 @@ int a_star(Node_t _field[][FLD_SZ], int end_i, int end_j)
 	while(is_empty(queue_head) != 1)
 	{
 		/*	get node from open list	*/
-		Node_t *current = malloc(sizeof(Node_t));
+		node_t *current = malloc(sizeof(node_t));
 		dequeue(&queue_head, &current);
 		_field[current->x][current->y].is_visited = 1;	
 		

@@ -4,10 +4,10 @@
 #include "node.h"
 
 /*	PROTOTYPES	*/
-int initialize_queue(Node_t**, Node_t**);
-int enqueue(Node_t**, Node_t **, Node_t*);
-int dequeue(Node_t**, Node_t**);
-int is_empty(Node_t *);
+int initialize_queue(node_t**, node_t**);
+int enqueue(node_t**, node_t **, node_t*);
+int dequeue(node_t**, node_t**);
+int is_empty(node_t *);
 
 
 #endif

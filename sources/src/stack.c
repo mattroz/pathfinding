@@ -4,7 +4,7 @@
 
 /*  stack functions implementation  */
 
-int init(Node_t *_head)
+int init(node_t *_head)
 {
 	_head->value = 0;
 	_head->next = NULL;
@@ -12,9 +12,9 @@ int init(Node_t *_head)
 }
 
 
-int push(Node_t **_head, int _value)
+int push(node_t **_head, int _value)
 {
-	Node_t *new_node = malloc(sizeof(Node_t));
+	node_t *new_node = malloc(sizeof(node_t));
 	new_node->value = _value;
 	new_node->next = *_head;
 	*_head = new_node;
@@ -24,7 +24,7 @@ int push(Node_t **_head, int _value)
 }
 
 
-int pop(Node_t **_head, int *dest)
+int pop(node_t **_head, int *dest)
 {
 	*dest = (*_head)->value;
 	*_head = (*_head)->next;
@@ -32,7 +32,7 @@ int pop(Node_t **_head, int *dest)
 }
 
 
-int print(Node_t **_head)
+int print(node_t **_head)
 {
 	while((*_head)->next != NULL)
 	{	

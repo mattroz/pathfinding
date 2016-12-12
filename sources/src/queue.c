@@ -7,10 +7,10 @@
 /*		IMPLEMENTATION	*/
 
 /*	link head and tail to each other	*/
-int initialize_queue(Node_t **_head, Node_t **_tail)
+int initialize_queue(node_t **_head, node_t **_tail)
 {
-	*_tail = malloc(sizeof(Node_t));
-	*_head = malloc(sizeof(Node_t));
+	*_tail = malloc(sizeof(node_t));
+	*_head = malloc(sizeof(node_t));
 	*_tail = NULL;
 	*_head = NULL;
 	printf("queue initialization\n");
@@ -19,9 +19,9 @@ int initialize_queue(Node_t **_head, Node_t **_tail)
 }
 
 
-int enqueue(Node_t **_head, Node_t **_tail, Node_t *enq_node)
+int enqueue(node_t **_head, node_t **_tail, node_t *enq_node)
 {	
-	Node_t *new_node = malloc(sizeof(Node_t));
+	node_t *new_node = malloc(sizeof(node_t));
 	new_node = enq_node;
 	enq_node->next = NULL;
 	
@@ -44,7 +44,7 @@ int enqueue(Node_t **_head, Node_t **_tail, Node_t *enq_node)
 }
 
 
-int dequeue(Node_t **_head, Node_t **dest_node)
+int dequeue(node_t **_head, node_t **dest_node)
 {
 	/*	check if head == tail	*/
 	if(is_empty((*_head)) != 0)
@@ -60,7 +60,7 @@ int dequeue(Node_t **_head, Node_t **dest_node)
 	return 1;
 }
 
-int is_empty(Node_t *_head)
+int is_empty(node_t *_head)
 {
 	/*  in other words: check if head == tail   */
 	return ((_head == NULL) ? 1 : 0);

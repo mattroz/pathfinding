@@ -8,8 +8,8 @@
 
 int main()
 {
-	Node_t node[SIZE];
-	Node_t *head, *tail;
+	node_t node[SIZE];
+	node_t *head, *tail;
 	initialize_queue(&head, &tail);	
 	
 	for(int i = 0; i < SIZE; i++)
@@ -21,7 +21,7 @@ int main()
 
 	for(int i = 0; i < SIZE; i++)
 	{
-		Node_t *empty_node = malloc(sizeof(Node_t));
+		node_t *empty_node = malloc(sizeof(node_t));
 		dequeue(&head, &empty_node);
 		printf("node.x = %d, node.y = %d\n", empty_node->x, empty_node->y);
 	}
