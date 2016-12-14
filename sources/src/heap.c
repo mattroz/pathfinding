@@ -7,7 +7,7 @@
  */
 int heap_initialize(heap_t *heap, int maximum_size)
 {
-	heap = malloc(sizeof(heap_t));
+	heap = malloc(HEAP_TYPE_SIZE);
 	if (heap != NULL)
 	{
 		heap->maxsize = maximum_size;
@@ -16,7 +16,7 @@ int heap_initialize(heap_t *heap, int maximum_size)
 		 * allocate memory for node_t's array 
 		 * (plus one 'cause heap nodes start from index 1)	
 		 */
-		heap->nodes = malloc(sizeof(node_t) * (maximum_size + 1));
+		heap->nodes = malloc(NODE_TYPE_SIZE * (maximum_size + 1));
 		if(heap->nodes == NULL)
 		{
 			free(heap);

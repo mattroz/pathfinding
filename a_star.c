@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}	
 	
-	print_field(map);
+	//print_field(map);
 	
 	if(a_star(map, i_end, j_end) != 1)
 	{
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	
-	print_field(map);
+	//print_field(map);
 
 	return 0;
 }
@@ -138,9 +138,7 @@ void print_field(node_t _field[][FLD_SZ])
         for(int j = 0; j < FLD_SZ; j++)
             printf("%d ", _field[i][j].is_visited);
         printf("\n");
-    }
-
-
+	}
 }
 
 

@@ -1,6 +1,10 @@
 #ifndef NODE_H
 #define NODE_H
 
+#define HEAP_TYPE_SIZE sizeof(heap_t)
+#define NODE_TYPE_SIZE sizeof(node_t)
+#define HEAPNODE_TYPE_SIZE sizeof(heapnode_t)
+
 /*  Queue element definition    */
 typedef struct fieldnode
 {
@@ -14,6 +18,7 @@ typedef struct fieldnode
 	int y;
 }node_t;
 
+
 /*	Heap data containers */
 typedef struct heapnode
 {
@@ -21,10 +26,14 @@ typedef struct heapnode
 	float priority;
 }heapnode_t;
 
+
 typedef struct Heap
 {
-	int maxsize;	/*	head implementation based on array, so we need to know max array size	*/
+	int maxsize;	/*	heap implementation based on array, so we need to know max array size	*/
 	int nodes_number;
+	int last_error;
 	heapnode_t *nodes;
 }heap_t;
+
+
 #endif
