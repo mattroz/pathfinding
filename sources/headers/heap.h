@@ -11,6 +11,6 @@ int heap_remove_min(heap_t*, node_t*);
 int get_parent(heap_t*, int);
 int get_rchild(heap_t*, int);
 int get_lchild(heap_t*, int);
-int get_error(heap_t*);
+void print_last_error(heap_t*);
 
 #endif

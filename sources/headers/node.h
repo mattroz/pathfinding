@@ -1,21 +1,19 @@
 #ifndef NODE_H
 #define NODE_H
 
-#ifdef __unix__
-#	include <limits.h>
-#	define HEAP_TYPE_SIZE \
-	({ heap_t h; \
-		(char*)(&h + 1) - (char*)&h; \
-	})
-#	define NODE_TYPE_SIZE \
-	({ node_t n; \
-		(char*)(&n + 1) - (char*)&n; \
-	})
-#	define HEAPNODE_TYPE_SIZE \
-	({ heapnode_t hn; \
-		(char*)(&hn + 1) - (char*)&hn; \
-	})
-#endif
+#define HEAP_TYPE_SIZE \
+({ heap_t h; \
+	(char*)(&h + 1) - (char*)&h; \
+})
+#define NODE_TYPE_SIZE \
+({ node_t n; \
+	(char*)(&n + 1) - (char*)&n; \
+})
+#define HEAPNODE_TYPE_SIZE \
+({ heapnode_t hn; \
+	(char*)(&hn + 1) - (char*)&hn; \
+})
+
 
 /****************************/
 /*  QUEUE DATA CONTAINERS   */
@@ -57,7 +55,7 @@ typedef struct heap
 /****************************/
 enum _heap_err
 {
-	E_SUCCESS = 0x00,
+	E_SUCCESS = 0x0,
 	E_MEMORY_ALLOC,
 	E_MEMORY_DEALLOC,
 	E_NODE_INSERT	
@@ -66,17 +64,17 @@ enum _heap_err
 
 typedef struct _heap_err_desc
 {
-	int code;
+	char *code_name;
 	char *msg;	
 }err_desc_t;
 
 
 err_desc_t error_description[] = 
 {
-	{ E_SUCCESS, 		"success" },
-	{ E_MEMORY_ALLOC, 	"memory allocation" },
-	{ E_MEMORY_DEALLOC, "memory deallocation" },
-	{ E_NODE_INSERT, 	"node insertion" }
+	{ "E_SUCCESS", 		"success" },
+	{ "E_MEMORY_ALLOC", 	"memory allocation" },
+	{ "E_MEMORY_DEALLOC",	"memory deallocation" },
+	{ "E_NODE_INSERT", 	"node insertion" }
 };
 
 

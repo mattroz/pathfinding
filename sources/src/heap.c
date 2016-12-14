@@ -28,6 +28,7 @@ int heap_initialize(heap_t *heap, int maximum_size)
 	return 1;
 }
 
+
 /*	swap 2 heap nodes	*/
 int heap_swap(heapnode_t *node1, heapnode_t *node2)
 {
@@ -45,7 +46,10 @@ int heap_insert(heap_t *heap, node_t *inserted, int _priority)
 }
 
 
-int get_error(heap_t *_heap)
+/*	print last heap error stored in heap data structure pointer	*/
+void print_last_error(heap_t *_heap)
 {
-
+	int errcode = _heap->last_error;
+	printf("HEAP ERROR: [code %d, description: %s]\n",
+			errcode, error_description[errcode].msg);
 }
