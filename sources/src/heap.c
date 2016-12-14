@@ -43,3 +43,9 @@ int heap_insert(heap_t *heap, node_t *inserted, int _priority)
 {
 	//TODO
 }
+
+
+int get_error(heap_t *_heap)
+{
+
+}

@@ -2,7 +2,7 @@
 #define HEAP_H
 
 #include "node.h"
-'
+
 int heap_initialize(heap_t*, int);
 int heap_swap(heapnode_t*, heapnode_t*);
 int deallocate_heap(heap_t*);
