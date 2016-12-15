@@ -3,7 +3,7 @@
 
 #include "node.h"
 
-int heap_initialize(heap_t*, int);
+heap_t *heap_initialize(int);
 int heap_swap(heapnode_t*, heapnode_t*);
 int deallocate_heap(heap_t*);
 int heap_insert(heap_t*, node_t*, int);

@@ -5,9 +5,9 @@
 /*
  * initizalize heap head and heap nodes for further work 
  */
-int heap_initialize(heap_t *heap, int maximum_size)
+heap_t *heap_initialize(int maximum_size)
 {
-	heap = malloc(HEAP_TYPE_SIZE);
+	heap_t *heap = malloc(HEAP_TYPE_SIZE);
 	if (heap != NULL)
 	{
 		heap->maxsize = maximum_size;
@@ -21,11 +21,11 @@ int heap_initialize(heap_t *heap, int maximum_size)
 		{
 			free(heap);
 			heap->last_error = E_MEMORY_ALLOC;	
-			return E_MEMORY_ALLOC;
+			return NULL;
 		}
 	}
 	
-	return E_SUCCESS;
+	return heap;
 }
 
 
