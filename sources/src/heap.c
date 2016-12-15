@@ -3,7 +3,7 @@
 #include "../headers/heap.h"
 
 /*
- * initizalize heap head and heap nodes for further work 
+ * initizalize heap head and heap elements for further work 
  */
 heap_t *heap_initialize(int maximum_size)
 {
@@ -11,25 +11,25 @@ heap_t *heap_initialize(int maximum_size)
 	if (heap != NULL)
 	{
 		heap->maxsize = maximum_size;
-		heap->nodes_number = 0;
+		heap->elements_number = 0;
 		/*	
 		 * allocate memory for node_t's array 
-		 * (plus one 'cause heap nodes start from index 1)	
+		 * (plus one 'cause heap elements start from index 1)	
 		 */
-		heap->nodes = malloc(NODE_TYPE_SIZE * (maximum_size + 1));
-		if(heap->nodes == NULL)
+		heap->elements = malloc(NODE_TYPE_SIZE * (maximum_size + 1));
+		if(heap->elements == NULL)
 		{
 			free(heap);
 			heap->last_error = E_MEMORY_ALLOC;	
 			return NULL;
 		}
 	}
-	
+
 	return heap;
 }
 
 
-/*	swap 2 heap nodes	*/
+/*	swap 2 heap elements	*/
 int heap_swap(heapnode_t *node1, heapnode_t *node2)
 {
 	heapnode_t temp;
@@ -42,9 +42,28 @@ int heap_swap(heapnode_t *node1, heapnode_t *node2)
 
 
 /*	implementation of insertion some node_t to heap	*/
-int heap_insert(heap_t *heap, node_t *inserted, int _priority)
+int heap_insert(heap_t *heap, node_t src_node, int _priority)
 {
-	//TODO
+	/*	return an error if heap pointer is NULL	*/
+	if(heap == NULL)
+	{
+		heap->last_error = E_NULL_PTR;
+		return E_NULL_PTR;
+	}
+	
+	/*	check if heap is full of elements	*/
+	if(heap->elements_number >= heap->maxsize)
+	{
+		heap->last_error = E_HEAP_OVERFLOW;
+		return E_HEAP_OVERFLOW;	
+	}
+	
+	/*	if all error cases were checked, add node to heap	*/
+	int idx = heap->elements_number++;
+	heap->elements[idx].data = src_node;
+	heap->elements[idx].priority = _priority;
+	
+	/*	move this element up	*/
 }
 
 
@@ -57,10 +76,10 @@ void print_last_error(heap_t *_heap)
 }
 
 
-/*	free heap and heap nodes	*/
+/*	free heap and heap elements	*/
 int deallocate_heap(heap_t* heap)
 {
-	free(heap->nodes);
+	free(heap->elements);
 	free(heap);
 	
 	return E_SUCCESS;

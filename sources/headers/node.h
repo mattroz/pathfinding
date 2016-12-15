@@ -14,6 +14,7 @@
 	(char*)(&hn + 1) - (char*)&hn; \
 })
 
+#define INF	
 
 /****************************/
 /*  QUEUE DATA CONTAINERS   */
@@ -44,9 +45,9 @@ typedef struct heapnode
 typedef struct heap
 {
 	int maxsize;	/*	heap implementation based on array, so we need to know max array size	*/
-	int nodes_number;
+	int elements_number;
 	int last_error;
-	heapnode_t *nodes;
+	heapnode_t *elements;
 }heap_t;
 
 
@@ -58,7 +59,9 @@ enum _heap_err
 	E_SUCCESS = 0x0,
 	E_MEMORY_ALLOC,
 	E_MEMORY_DEALLOC,
-	E_NODE_INSERT	
+	E_NODE_INSERT,
+	E_NULL_PTR,
+	E_HEAP_OVERFLOW	
 };
 
 
@@ -74,7 +77,9 @@ err_desc_t error_description[] =
 	{ "E_SUCCESS",			"success" },
 	{ "E_MEMORY_ALLOC",		"memory allocation" },
 	{ "E_MEMORY_DEALLOC",	"memory deallocation" },
-	{ "E_NODE_INSERT", 		"node insertion" }
+	{ "E_NODE_INSERT", 		"node insertion" },
+	{ "E_NULL_PTR",			"null pointer object" },
+	{ "E_HEAP_OVERFLOW",	"heap is full: overflow" }
 };
 
 
