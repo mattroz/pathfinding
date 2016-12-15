@@ -20,12 +20,12 @@ int heap_initialize(heap_t *heap, int maximum_size)
 		if(heap->nodes == NULL)
 		{
 			free(heap);
-			perror("memory allocation at initialization");
-			return 0;
+			heap->last_error = E_MEMORY_ALLOC;	
+			return E_MEMORY_ALLOC;
 		}
 	}
 	
-	return 1;
+	return E_SUCCESS;
 }
 
 
@@ -35,7 +35,9 @@ int heap_swap(heapnode_t *node1, heapnode_t *node2)
 	heapnode_t temp;
 	temp = *node1;
 	*node1 = *node2;
-	*node2 = temp;
+	*node2 = temp;	
+
+	return E_SUCCESS;
 }
 
 
@@ -52,4 +54,14 @@ void print_last_error(heap_t *_heap)
 	int errcode = _heap->last_error;
 	printf("HEAP ERROR: [code %d, description: %s]\n",
 			errcode, error_description[errcode].msg);
+}
+
+
+/*	free heap and heap nodes	*/
+int deallocate_heap(heap_t* heap)
+{
+	free(heap->nodes);
+	free(heap);
+	
+	return E_SUCCESS;
 }

@@ -71,10 +71,10 @@ typedef struct _heap_err_desc
 
 err_desc_t error_description[] = 
 {
-	{ "E_SUCCESS", 		"success" },
-	{ "E_MEMORY_ALLOC", 	"memory allocation" },
+	{ "E_SUCCESS",			"success" },
+	{ "E_MEMORY_ALLOC",		"memory allocation" },
 	{ "E_MEMORY_DEALLOC",	"memory deallocation" },
-	{ "E_NODE_INSERT", 	"node insertion" }
+	{ "E_NODE_INSERT", 		"node insertion" }
 };
 
 
