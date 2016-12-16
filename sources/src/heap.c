@@ -110,3 +110,29 @@ int deallocate_heap(heap_t* heap)
 	
 	return E_SUCCESS;
 }
+
+
+node_t *heap_remove_min(heap_t *heap)
+{
+	node_t *min_node = &heap->elements[1].data;
+	heap->elements_number--;
+	heap->elements[1] = heap->elements[heap->elements_number];
+	
+	int idx = 1;
+	/*	downheap	*/
+	while(idx < heap->elements_number)
+	{
+		/*	get minimal child index of current node	*/
+		int left = lchild_idx_of(idx);
+		int right = rchild_idx_of(idx);
+		int min_child_idx = 
+			(heap->elements[left].priority < heap->elements[right].priority)  
+			 ? left
+			 : right;
+
+		heap_swap(&heap->elements[idx], &heap->elements[min_child_idx]);
+		idx += min_child_idx;
+	}
+	
+	return min_node;
+}

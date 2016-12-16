@@ -14,7 +14,6 @@
 	(char*)(&hn + 1) - (char*)&hn; \
 })
 
-#define INF	
 
 /****************************/
 /*  QUEUE DATA CONTAINERS   */

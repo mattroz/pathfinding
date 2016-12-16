@@ -7,6 +7,7 @@
 int main()
 {
 	heap_t *pheap;
+	node_t *node;
 	pheap = heap_initialize(10);
 	srand(time(NULL));
 	/*	
@@ -32,9 +33,15 @@ int main()
 	{
 		printf("[%d] = %f\n", i, pheap->elements[i].priority);
 	}
-	
-//	free(pheap->elements);
-//	free(pheap);
+
+	node = heap_remove_min(pheap);
+	printf("x of min prior elem is %d\n", node->x);
+
+	for(int i = 0; i < 10; i++)
+    {
+        printf("[%d] = %f\n", i, pheap->elements[i].priority);
+    }
+
 
 	return 0;
 }
