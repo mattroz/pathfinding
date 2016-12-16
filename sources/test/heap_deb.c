@@ -6,6 +6,7 @@
 
 int main()
 {
+	float prior_array[10] = {2.0, 7.0, 26.0, 25.0, 19.0, 17.0, 1.0, 90.0, 3.0, 36.0};
 	heap_t *pheap;
 	node_t *node;
 	pheap = heap_initialize(10);
@@ -19,10 +20,9 @@ int main()
 	for(int i = 0; i < 10; i++)
 	{
 		node_t node;
-		float priority = rand() % 50;
-		printf("%f\n", priority);
+		printf("%f\n", prior_array[i]);
 		
-		if ( heap_insert(pheap, node, priority) != E_SUCCESS )
+		if ( heap_insert(pheap, node, prior_array[i]) != E_SUCCESS )
 		{
 			print_last_error(pheap);
 			return 1;

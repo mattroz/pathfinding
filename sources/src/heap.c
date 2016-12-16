@@ -120,7 +120,7 @@ node_t *heap_remove_min(heap_t *heap)
 	
 	int idx = 1;
 	/*	downheap	*/
-	while(idx < heap->elements_number)
+	while(idx < (heap->elements_number - 1))
 	{
 		/*	get minimal child index of current node	*/
 		int left = lchild_idx_of(idx);
@@ -131,7 +131,7 @@ node_t *heap_remove_min(heap_t *heap)
 			 : right;
 
 		heap_swap(&heap->elements[idx], &heap->elements[min_child_idx]);
-		idx += min_child_idx;
+		idx = min_child_idx;
 	}
 	
 	return min_node;
