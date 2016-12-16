@@ -35,6 +35,7 @@ int main()
 	}
 
 	node = heap_remove_min(pheap);
+	heap_insert(pheap, *node, 4);
 	printf("x of min prior elem is %d\n", node->x);
 
 	for(int i = 0; i < 10; i++)
