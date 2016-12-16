@@ -36,8 +36,6 @@ void heap_swap(heapnode_t *node1, heapnode_t *node2)
 	temp = *node1;
 	*node1 = *node2;
 	*node2 = temp;	
-
-	return E_SUCCESS;
 }
 
 
@@ -87,8 +85,8 @@ int heap_insert(heap_t *heap, node_t src_node, int _priority)
 		  heap->elements[parent_idx_of(i)].priority &&
 		  i > 1)
 	{
-		heap_swap(heap->elements[i], heap->elements[parent_idx_of(i)]);
-		i += parent_idx_of(i);
+		heap_swap(&heap->elements[i], &heap->elements[parent_idx_of(i)]);
+		i = parent_idx_of(i);
 	}
 	
 	return E_SUCCESS;
