@@ -30,7 +30,7 @@ heap_t *heap_initialize(int maximum_size)
 
 
 /*	swap 2 heap elements	*/
-int heap_swap(heapnode_t *node1, heapnode_t *node2)
+void heap_swap(heapnode_t *node1, heapnode_t *node2)
 {
 	heapnode_t temp;
 	temp = *node1;
@@ -38,6 +38,24 @@ int heap_swap(heapnode_t *node1, heapnode_t *node2)
 	*node2 = temp;	
 
 	return E_SUCCESS;
+}
+
+
+int parent_idx_of(int child_idx)
+{
+	return (child_idx / 2);
+}
+
+
+int lchild_idx_of(int parent_idx)
+{
+	return (2 * parent_idx);
+}
+
+
+int rchild_idx_of(int parent_idx)
+{
+	return (2 * parent_idx + 1);
 }
 
 
@@ -63,7 +81,17 @@ int heap_insert(heap_t *heap, node_t src_node, int _priority)
 	heap->elements[idx].data = src_node;
 	heap->elements[idx].priority = _priority;
 	
-	/*	move this element up	*/
+	/*	move this element up if there is min-heap violation	*/
+	int i = idx;
+	while(heap->elements[i].priority <= 
+		  heap->elements[parent_idx_of(i)].priority &&
+		  i > 1)
+	{
+		heap_swap(heap->elements[i], heap->elements[parent_idx_of(i)]);
+		i += parent_idx_of(i);
+	}
+	
+	return E_SUCCESS;
 }
 
 
