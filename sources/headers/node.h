@@ -60,7 +60,8 @@ enum _heap_err
 	E_MEMORY_DEALLOC,
 	E_NODE_INSERT,
 	E_NULL_PTR,
-	E_HEAP_OVERFLOW	
+	E_HEAP_OVERFLOW,
+	E_HEAP_EMPTY	
 };
 
 
@@ -78,7 +79,8 @@ err_desc_t error_description[] =
 	{ "E_MEMORY_DEALLOC",	"memory deallocation" },
 	{ "E_NODE_INSERT", 		"node insertion" },
 	{ "E_NULL_PTR",			"null pointer object" },
-	{ "E_HEAP_OVERFLOW",	"heap is full: overflow" }
+	{ "E_HEAP_OVERFLOW",	"heap is full: overflow" },
+	{ "E_HEAP_EMPTY",		"heap is empty" }
 };
 
 

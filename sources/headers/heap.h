@@ -12,5 +12,6 @@ int parent_idx_of(int);
 int rchild_idx_of(int);
 int lchild_idx_of(int);
 void print_last_error(heap_t*);
+int is_heap_empty(heap_t*);
 
 #endif
