@@ -24,6 +24,7 @@ heap_t *heap_initialize(int maximum_size)
 			return NULL;
 		}
 	}
+	heap->elements[0].priority = 1000000;	
 
 	return heap;
 }
@@ -75,7 +76,7 @@ int heap_insert(heap_t *heap, node_t src_node, int _priority)
 	}
 	
 	/*	if all error cases were checked, add node to heap	*/
-	int idx = heap->elements_number++;
+	int idx = ++heap->elements_number;
 	heap->elements[idx].data = src_node;
 	heap->elements[idx].priority = _priority;
 	

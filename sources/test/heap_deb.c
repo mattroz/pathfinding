@@ -6,18 +6,13 @@
 
 int main()
 {
-	float prior_array[10] = {2.0, 7.0, 26.0, 25.0, 19.0, 17.0, 1.0, 90.0, 3.0, 36.0};
+	float prior_array[5] = {2.0, 7.0, 26.0, 25.0, 19.0};
 	heap_t *pheap;
 	node_t *node;
-	pheap = heap_initialize(10);
+	pheap = heap_initialize(6);
 	srand(time(NULL));
-	/*	
-	if(deallocate_heap(pheap) != E_SUCCESS)
-	{
-		print_last_error(pheap);
-	}
-	*/
-	for(int i = 0; i < 10; i++)
+	
+	for(int i = 0; i < 5; i++)
 	{
 		node_t node;
 		printf("%f\n", prior_array[i]);
@@ -29,16 +24,14 @@ int main()
 		}
 	}
 
-	for(int i = 0; i < 10; i++)
+	for(int i = 1; i <= pheap->elements_number; i++)
 	{
 		printf("[%d] = %f\n", i, pheap->elements[i].priority);
 	}
 
 	node = heap_remove_min(pheap);
-	heap_insert(pheap, *node, 4);
-	printf("x of min prior elem is %d\n", node->x);
 
-	for(int i = 0; i < 10; i++)
+	for(int i = 1; i <= pheap->elements_number; i++)
     {
         printf("[%d] = %f\n", i, pheap->elements[i].priority);
     }
