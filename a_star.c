@@ -3,8 +3,8 @@
 #include <time.h>
 #include <string.h>
 #include <math.h>
-#include "sources/headers/queue.h"
-#include "sources/src/queue.c"
+#include "sources/headers/heap.h"
+#include "sources/src/heap.c"
 
 #define FLD_SZ 15
 #define MOV_COST 1	/*	assume that node size is 1x1 meters	*/
@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}	
 	
-	//print_field(map);
+	print_field(map);
 	
 	if(a_star(map, i_end, j_end) != 1)
 	{
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	
-	//print_field(map);
+	print_field(map);
 
 	return 0;
 }
@@ -145,9 +145,15 @@ void print_field(node_t _field[][FLD_SZ])
 int a_star(node_t _field[][FLD_SZ], int end_i, int end_j)
 {
 	/*	initialize queue	*/
-	node_t *queue_head, *queue_tail;
-	initialize_queue(&queue_head, &queue_tail);
-	enqueue(&queue_head, &queue_tail, &_field[I_START][J_START]);	
+	heap_t *pheap = heap_initialize(FLD_SZ);
+	float start_estimation = _field[I_START][J_START].heuristic + 
+					 		 _field[I_START][J_START].movement_cost;
+
+	if(heap_insert(pheap, _field[I_START][J_START], start_estimation) != E_SUCCESS)
+	{
+		print_last_error(pheap);
+		return 0;
+	}
 
 	/*	initialize some data structures	for A*	*/
 	//float current_cost[FLD_SZ * FLD_SZ];
@@ -157,17 +163,17 @@ int a_star(node_t _field[][FLD_SZ], int end_i, int end_j)
 		step_y[4] = {1, 0, -1, 0};
 
 	/*	start searching	*/		
-	while(is_empty(queue_head) != 1)
+	while(is_heap_empty(pheap) != 1)
 	{
 		/*	get node from open list	*/
-		node_t *current = malloc(sizeof(node_t));
-		dequeue(&queue_head, &current);
-		_field[current->x][current->y].is_visited = 1;	
+		node_t current = heap_remove_min(pheap);
+		
+		_field[current.x][current.y].is_visited = 1;	
 		
 		/*	check if current node is an endpoint	*/
-		if(current->x == end_i && current->y == end_j)
+		if(current.x == end_i && current.y == end_j)
 		{
-			printf("finished at [%d][%d]\n", current->x, current->y);
+			printf("finished at [%d][%d]\n", current.x, current.y);
 			return 1;	
 		}
 	
@@ -175,11 +181,11 @@ int a_star(node_t _field[][FLD_SZ], int end_i, int end_j)
 		for(int i = 0; i < 4; i++)
 		{
 			/*	move up/right/down/left	*/
-			int X = current->x + step_x[i];
-			int Y = current->y + step_y[i];			
+			int X = current.x + step_x[i];
+			int Y = current.y + step_y[i];			
 			
 			/*	calculate cost from start point to current neighbour	*/ 
-			_field[X][Y].cost_from_start = current->cost_from_start + 
+			_field[X][Y].cost_from_start = current.cost_from_start + 
 											_field[X][Y].movement_cost;
 			printf("cost from start to [%d][%d] = %f\n", X, Y, _field[X][Y].cost_from_start);			
 
@@ -190,7 +196,13 @@ int a_star(node_t _field[][FLD_SZ], int end_i, int end_j)
 			if(_field[X][Y].is_obstacle == 0 && _field[X][Y].is_visited == 0)
 			{
 				//	NEED: enqueue(&queue_head, &queue_tail, &_field[X][Y], estimation);
-				enqueue(&queue_head, &queue_tail, &_field[X][Y]);
+				float estimation = _field[X][Y].heuristic + 
+								   _field[X][Y].cost_from_start;
+				if(heap_insert(pheap, _field[X][Y], estimation) != E_SUCCESS)
+				{
+					print_last_error(pheap);
+					return 0;
+				}
 			}
 		}
 	}

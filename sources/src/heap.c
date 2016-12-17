@@ -113,16 +113,16 @@ int deallocate_heap(heap_t* heap)
 }
 
 
-node_t *heap_remove_min(heap_t *heap)
+node_t heap_remove_min(heap_t *heap)
 {
-	/*	return NULL if heap is empty	*/
+	/*	return error heap element (which is infinite) if heap is empty	*/
 	if(is_heap_empty(heap) == 1)
 	{
 		heap->last_error = E_HEAP_EMPTY;
-		return NULL;
+		return heap->elements[0].data;
 	}
 
-	node_t *min_node = &heap->elements[1].data;
+	node_t min_node = heap->elements[1].data;
 	heap->elements_number--;
 	heap->elements[1] = heap->elements[heap->elements_number];
 	
