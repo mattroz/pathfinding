@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}	
 	
-	print_field(map);
+	//print_field(map);
 	
 	if(a_star(map, i_end, j_end) != 1)
 	{
@@ -145,7 +145,7 @@ void print_field(node_t _field[][FLD_SZ])
 int a_star(node_t _field[][FLD_SZ], int end_i, int end_j)
 {
 	/*	initialize queue	*/
-	heap_t *pheap = heap_initialize(FLD_SZ);
+	heap_t *pheap = heap_initialize(FLD_SZ*FLD_SZ);
 	float start_estimation = _field[I_START][J_START].heuristic + 
 					 		 _field[I_START][J_START].movement_cost;
 
