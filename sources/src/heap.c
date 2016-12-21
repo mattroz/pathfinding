@@ -14,7 +14,8 @@ heap_t *heap_initialize(int maximum_size)
 		heap->elements_number = 0;
 		/*	
 		 * allocate memory for node_t's array 
-		 * (plus one 'cause heap elements start from index 1)	
+		 * (plus one 'cause heap elements start from index 1)
+		 *	and fill its elements' priorities to INF	
 		 */
 		heap->elements = malloc(NODE_TYPE_SIZE * (maximum_size + 1));
 		if(heap->elements == NULL)
@@ -23,8 +24,12 @@ heap_t *heap_initialize(int maximum_size)
 			heap->last_error = E_MEMORY_ALLOC;	
 			return NULL;
 		}
+		
+		for(int i = 0; i < maximum_size + 1; i++)
+		{
+			heap->elements[i].priority = HEAP_INF;
+		}
 	}
-	heap->elements[0].priority = 1000000;	
 
 	return heap;
 }
@@ -123,8 +128,11 @@ node_t heap_remove_min(heap_t *heap)
 	}
 
 	node_t min_node = heap->elements[1].data;
+	heap->elements[1] = heap->elements[heap->elements_number];	
+	/*	make priority of old element equal to INF	*/
+	heap->elements[heap->elements_number].priority = HEAP_INF;	
+
 	heap->elements_number--;
-	heap->elements[1] = heap->elements[heap->elements_number];
 	
 	int idx = 1;
 	/*	downheap	*/

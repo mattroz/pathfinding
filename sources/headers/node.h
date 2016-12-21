@@ -14,6 +14,7 @@
 	(char*)(&hn + 1) - (char*)&hn; \
 })
 
+#define HEAP_INF 1000000
 
 /****************************/
 /*  QUEUE DATA CONTAINERS   */

@@ -167,7 +167,8 @@ int a_star(node_t _field[][FLD_SZ], int end_i, int end_j)
 	{
 		/*	get node from open list	*/
 		node_t current = heap_remove_min(pheap);
-		
+		printf("get node [%d][%d], h = %f\n", current.x, current.y, (current.heuristic + current.movement_cost));	
+	
 		_field[current.x][current.y].is_visited = 1;	
 		
 		/*	check if current node is an endpoint	*/
@@ -187,7 +188,7 @@ int a_star(node_t _field[][FLD_SZ], int end_i, int end_j)
 			/*	calculate cost from start point to current neighbour	*/ 
 			_field[X][Y].cost_from_start = current.cost_from_start + 
 											_field[X][Y].movement_cost;
-			printf("cost from start to [%d][%d] = %f\n", X, Y, _field[X][Y].cost_from_start);			
+			//printf("cost from start to [%d][%d] = %f\n", X, Y, _field[X][Y].cost_from_start);			
 
 			/*	
 			 *	if this neighbour isn't obstacle and 
@@ -195,7 +196,6 @@ int a_star(node_t _field[][FLD_SZ], int end_i, int end_j)
 			 */
 			if(_field[X][Y].is_obstacle == 0 && _field[X][Y].is_visited == 0)
 			{
-				//	NEED: enqueue(&queue_head, &queue_tail, &_field[X][Y], estimation);
 				float estimation = _field[X][Y].heuristic + 
 								   _field[X][Y].cost_from_start;
 				if(heap_insert(pheap, _field[X][Y], estimation) != E_SUCCESS)
